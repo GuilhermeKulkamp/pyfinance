@@ -6,15 +6,18 @@ from datetime import datetime
 # Inicializando um DataFrame vazio
 df = pd.DataFrame()
 
+# Define o diretório em que serão lidos os arquivos
+diretorio = "extratos"
+
 # Percorrendo todos os arquivos na pasta 'extratos'
-for extrato in os.listdir("extratos"):
+for extrato in os.listdir(diretorio):
     # Verificando o tipo de arquivo
-    tipo = os.path.splitext(f'extratos/{extrato}')
+    tipo = os.path.splitext(f'{diretorio}/{extrato}')
     
     # Filtrando apenas arquivos com extensão .ofx
     if tipo[1] == '.ofx':
         # Abrindo o arquivo OFX para leitura
-        with open(f"extratos/{extrato}", encoding='ascii') as ofx_file:
+        with open(f"{diretorio}/{extrato}", encoding='ascii') as ofx_file:
             # Fazendo o parse do arquivo OFX para obter os dados
             ofx = ofxparse.OfxParser.parse(ofx_file)
         
@@ -48,11 +51,20 @@ for extrato in os.listdir("extratos"):
         # Concatenando os dados do DataFrame temporário com o DataFrame principal
         df = pd.concat([df, df_temp])
 
+
 # Parte adicional: Salvando o DataFrame em arquivos Excel e CSV
-# 1. Salvando o DataFrame 'df' em um arquivo CSV
+
+# 1. Salvando o DataFrame 'df' em uma planilha Excel
+# O método 'to_excel' salva o DataFrame em um arquivo Excel (.xlsx)
+# Argumento 'index=False' evita que o índice do DataFrame seja incluído no arquivo
+#df.to_excel('extratos/transacoes_extratos.xlsx', index=False)
+
+# 2. Salvando o DataFrame 'df' em um arquivo CSV
 # O método 'to_csv' salva o DataFrame em um arquivo CSV (.csv)
 # Argumento 'index=False' para evitar a inclusão do índice no arquivo CSV
-df.to_csv('transacoes_extratos.csv', index=False, sep=';',)
+# ATENÇÃO: Caso o arquivo já exista ele será sobrescrito
+
+df.to_csv(f'{diretorio}/transacoes_extratos.csv', index=False, sep=';')
 
 # Comentários adicionais:
 # No CSV, o argumento 'sep=";"' define que o separador de colunas será o ponto e vírgula, 
