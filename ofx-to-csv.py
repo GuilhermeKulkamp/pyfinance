@@ -52,14 +52,7 @@ for extrato in os.listdir(diretorio):
         df = pd.concat([df, df_temp])
 
 
-# Parte adicional: Salvando o DataFrame em arquivos Excel e CSV
-
-# 1. Salvando o DataFrame 'df' em uma planilha Excel
-# O método 'to_excel' salva o DataFrame em um arquivo Excel (.xlsx)
-# Argumento 'index=False' evita que o índice do DataFrame seja incluído no arquivo
-#df.to_excel('extratos/transacoes_extratos.xlsx', index=False)
-
-# 2. Salvando o DataFrame 'df' em um arquivo CSV
+# Salvando o DataFrame 'df' em um arquivo CSV
 # O método 'to_csv' salva o DataFrame em um arquivo CSV (.csv)
 # Argumento 'index=False' para evitar a inclusão do índice no arquivo CSV
 # ATENÇÃO: Caso o arquivo já exista ele será sobrescrito
